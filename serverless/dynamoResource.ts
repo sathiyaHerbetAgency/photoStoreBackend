@@ -10,6 +10,14 @@ const dynamoResource: AWS["resources"]["Resources"] = {
           AttributeName: "id",
           AttributeType: "S",
         },
+        {
+          AttributeName: "pk",
+          AttributeType: "S",
+        },
+        {
+          AttributeName: "sk",
+          AttributeType: "S",
+        },
       ],
       KeySchema: [
         {
@@ -24,8 +32,29 @@ const dynamoResource: AWS["resources"]["Resources"] = {
       },
       StreamSpecification: {
       StreamViewType: "OLD_IMAGE",
-      }
-    //   Enabled: true,
+      },
+      GlobalSecondaryIndexes:[
+        {
+          IndexName: "index1",
+          KeySchema: [
+            {
+              AttributeName: "pk",
+              KeyType: "HASH",
+            },
+            {
+              AttributeName: "sk",
+              KeyType: "RANGE",
+            },
+          ],
+          Projection: {
+            ProjectionType: "ALL",
+          },
+          // ProvisionedThroughput: {
+          //   ReadCapacityUnits: 1,
+          //   WriteCapacityUnits: 1,
+          // },
+        }
+      ]
     },
   },
 };

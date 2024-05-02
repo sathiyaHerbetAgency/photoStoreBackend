@@ -24,12 +24,24 @@ const functions:AWS['functions'] = {
                         'Fn::GetAtt':[
                             'remindersTable',
                             'StreamArn'
-                        ]
+                        ],
                     },
-                    filterPattern: [{eventName: ['Remove']}],
+                    filterPatterns: [{eventName: ['REMOVE']}],
                 }
             }
         ],
+        //@ts-expect-error
+        iamRoleStatements:[
+            {
+              Effect:'Allow',
+              Action:[
+                'ses:sendEmail',
+                'sns:Publish'
+            ],
+              Resource:'*',
+            }
+        ],
+
     }
 }
 
